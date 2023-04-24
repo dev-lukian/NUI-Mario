@@ -170,6 +170,17 @@ TIME_WARNING = 'time warning'
 SPED_UP_NORMAL = 'sped up normal'
 MARIO_INVINCIBLE = 'mario invincible'
 
+#STATES FOR SPEECH RECOGNITION
+STAND_BY = 'stand by'
+LISTENING = 'listening'
+LOADING = 'loading'
+RECOGNIZED = 'recognized'
+FAILED = 'failed'
+
+#SPEECH COMMANDS
+COMMANDS = ['down', 'up', 'start', 'right', 'left', 'jump', 'stop']
+
+
 
 
 

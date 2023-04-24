@@ -1,6 +1,10 @@
 import os
 import azure.cognitiveservices.speech as speechsdk
 from dotenv import load_dotenv
+from . import constants as c
+from . components import speech_states
+from threading import Timer
+
 
 class SpeechRecognizer:
     def __init__(self):
@@ -16,11 +20,40 @@ class SpeechRecognizer:
         speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
         self.recognizer = speech_recognizer
+        self.recognizer.speech_start_detected.connect(self.handle_detected)
+        self.recognizer.recognizing.connect(self.handle_recognizing)
+        self.recognizer.recognized.connect(self.handle_recognized)
+        self.recognizer.session_stopped.connect(self.handle_restart)
+
         self.all_events = []
+        self.speech_state = speech_states.SpeechStates()
+
 
     def recognize(self):
+        print('listening')
+        result = self.recognizer.recognize_once_async()
 
-        # The event recognized signals that a final recognition result is received.
-        self.recognizer.recognized.connect(lambda event: self.all_events.append([event.result.text, False]))
+    def handle_detected(self, event):
+        self.speech_state.state = c.LISTENING
 
-        self.recognizer.start_continuous_recognition_async()
+    def handle_recognizing(self, event):
+        self.speech_state.state = c.LOADING
+
+    def handle_recognized(self, event):
+        if event.result.text.lower() in c.COMMANDS:
+            self.all_events.append([event.result.text.lower(), False])
+            self.speech_state.state = c.RECOGNIZED
+        else:
+            self.speech_state.state = c.FAILED
+        
+        def changeState():
+            self.speech_state.state = c.STAND_BY
+
+        t = Timer(0.25, changeState)
+        t.start()
+    
+    def handle_restart(self, event):
+        t = Timer(0.1, self.recognize)
+        t.start()
+
+

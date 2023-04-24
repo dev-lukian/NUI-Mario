@@ -359,6 +359,7 @@ class Level1(tools._State):
         self.check_if_time_out()
         self.blit_everything(surface)
         self.sound_manager.update(self.game_info, self.mario)
+        self.recognizer.speech_state.draw(surface)
 
 
 

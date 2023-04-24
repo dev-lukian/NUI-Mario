@@ -3,7 +3,7 @@ __author__ = 'justinarmstrong'
 import pygame as pg
 from .. import setup, tools
 from .. import constants as c
-from .. components import info, mario
+from .. components import info, mario, speech_states
 
 
 class Menu(tools._State):
@@ -33,6 +33,7 @@ class Menu(tools._State):
         self.setup_background()
         self.setup_mario(recognizer)
         self.setup_cursor()
+
 
 
     def setup_cursor(self):
@@ -102,6 +103,7 @@ class Menu(tools._State):
         surface.blit(self.mario.image, self.mario.rect)
         surface.blit(self.cursor.image, self.cursor.rect)
         self.overhead_info.draw(surface)
+        self.recognizer.speech_state.draw(surface)
 
 
     def update_cursor(self, keys, speech_events):
