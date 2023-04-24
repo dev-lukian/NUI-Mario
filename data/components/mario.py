@@ -583,11 +583,13 @@ class Mario(pg.sprite.Sprite):
                 else:
                     setup.SFX['small_jump'].play()
                 self.state = c.JUMP
+                self.y_vel = c.JUMP_VEL
+                self.gravity = c.GRAVITY
                 speech_events[-1][1] = True
                 if self.x_vel > 4.5 or self.x_vel < -4.5:
-                    self.y_vel = c.JUMP_VEL +10
+                    self.y_vel = c.JUMP_VEL - 0.5
                 else:
-                    self.y_vel = c.JUMP_VEL +10
+                    self.y_vel = c.JUMP_VEL
 
 
         if keys[tools.keybinding['left']] or (speech_events and speech_events[-1][0].lower() == 'left'):
@@ -612,18 +614,33 @@ class Mario(pg.sprite.Sprite):
             #print(self.x_vel)
             self.get_out_of_crouch()
             self.facing_right = True
-            if self.x_vel < 0:
-                self.frame_index = 5
-                self.x_accel = c.SMALL_TURNAROUND
-            else:
-                self.x_accel = c.WALK_ACCEL
+            if(speech_events and speech_events[-1][0].lower() == 'jump' and speech_events[-1][1] == False):     
+                if self.x_vel < 0:
+                    self.frame_index = 5
+                    self.x_accel = c.SMALL_TURNAROUND
+                else:
+                    self.x_accel = c.WALK_ACCEL
 
-            if self.x_vel < self.max_x_vel:
-                self.x_vel += self.x_accel
-                if self.x_vel < 0.5:
-                    self.x_vel = 0.5
-            elif self.x_vel > self.max_x_vel:
-                self.x_vel -= self.x_accel
+                if self.x_vel < self.max_x_vel:
+                    self.x_vel += self.x_accel
+                    if self.x_vel < 0.5:
+                        self.x_vel = 0.5
+                elif self.x_vel > self.max_x_vel:
+                    self.x_vel -= self.x_accel
+            else:
+                if self.x_vel < 0:
+                    self.frame_index = 5
+                    self.x_accel = c.SMALL_TURNAROUND
+                else:
+                    self.x_accel = c.WALK_ACCEL
+
+                if self.x_vel < self.max_x_vel:
+                    self.x_vel += self.x_accel
+                    if self.x_vel < 0.5:
+                        self.x_vel = 0.5
+                elif self.x_vel > self.max_x_vel:
+                    self.x_vel -= self.x_accel
+
 
         elif speech_events and speech_events[-1][0].lower() == 'stop':
             print('stop')
@@ -632,9 +649,9 @@ class Mario(pg.sprite.Sprite):
 
         elif (speech_events and speech_events[-1][0].lower() == 'run' and speech_events[-1][1] == False) and self.x_vel > 0:
              print('run')
-             self.x_vel += self.x_accel 
+             self.x_vel += self.x_accel * 0.15
             # print(self.x_vel)
-             if(self.x_vel == self.max_x_vel * 0.1):
+             if(self.x_vel == self.max_x_vel):
                  speech_events[-1][1] = True;  
 
         else:
@@ -681,11 +698,11 @@ class Mario(pg.sprite.Sprite):
             if self.x_vel > (self.max_x_vel * - 1):
                 self.x_vel -= self.x_accel
 
-        elif keys[tools.keybinding['right']]:
+        elif keys[tools.keybinding['right']] or (speech_events and speech_events[-1][0].lower() == 'right'):
             if self.x_vel < self.max_x_vel:
                 self.x_vel += self.x_accel
 
-        if not keys[tools.keybinding['jump']]: #this might be it.
+        if not keys[tools.keybinding['jump']]: 
             self.gravity = c.GRAVITY
             self.state = c.FALL
 
@@ -704,7 +721,7 @@ class Mario(pg.sprite.Sprite):
             if self.x_vel > (self.max_x_vel * - 1):
                 self.x_vel -= self.x_accel
 
-        elif keys[tools.keybinding['right']]:
+        elif keys[tools.keybinding['right']] or (speech_events and speech_events[-1][0].lower() == 'right'):
             if self.x_vel < self.max_x_vel:
                 self.x_vel += self.x_accel
 
