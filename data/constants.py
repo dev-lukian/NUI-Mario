@@ -179,7 +179,7 @@ RECOGNIZED = 'recognized'
 FAILED = 'failed'
 
 #SPEECH COMMANDS
-COMMANDS = ['down', 'up', 'start', 'right', 'left', 'jump', 'stop']
+COMMANDS = ['down', 'up', 'start', 'right', 'left', 'jump', 'stop', 'fire']
 
 
 
