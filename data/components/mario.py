@@ -470,8 +470,13 @@ class Mario(pg.sprite.Sprite):
                 else:
                     setup.SFX['small_jump'].play()
                 self.state = c.JUMP
-                self.y_vel = c.JUMP_VEL
+                self.gravity = c.GRAVITY
                 speech_events[-1][1] = True
+                self.y_vel = c.JUMP_VEL - 0.5
+                if self.facing_right:
+                    self.x_vel = 3
+                else:
+                    self.x_vel = -3
         elif speech_events and speech_events[-1][0].lower() == 'stop':
             print('stop')
             self.get_out_of_crouch()
