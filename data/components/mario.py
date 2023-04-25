@@ -615,18 +615,25 @@ class Mario(pg.sprite.Sprite):
             self.get_out_of_crouch()
             self.facing_right = True
             if(speech_events and speech_events[-1][0].lower() == 'jump' and speech_events[-1][1] == False):     
-                if self.x_vel < 0:
-                    self.frame_index = 5
-                    self.x_accel = c.SMALL_TURNAROUND
-                else:
-                    self.x_accel = c.WALK_ACCEL
+               print('jump')
+               self.get_out_of_crouch()
+               if self.allow_jump:
+                    if self.big:
+                        setup.SFX['big_jump'].play()
+                    else:
+                        setup.SFX['small_jump'].play()
+                    self.state = c.JUMP
+                    self.y_vel = c.JUMP_VEL
+                    self.gravity = c.GRAVITY
+                    
+                    if self.x_vel > 4.5 or self.x_vel < -4.5:
+                        self.y_vel = c.JUMP_VEL
+                        speech_events[-1][1] = True
+                    else:
+                        self.y_vel = c.JUMP_VEL
+                        speech_events[-1][1] = True
 
-                if self.x_vel < self.max_x_vel:
-                    self.x_vel += self.x_accel
-                    if self.x_vel < 0.5:
-                        self.x_vel = 0.5
-                elif self.x_vel > self.max_x_vel:
-                    self.x_vel -= self.x_accel
+
             else:
                 if self.x_vel < 0:
                     self.frame_index = 5
