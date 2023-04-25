@@ -18,6 +18,7 @@ class Mario(pg.sprite.Sprite):
         self.setup_forces()
         self.setup_counters()
         self.load_images_from_sheet()
+        self.setup_static_colliders()
 
         self.state = c.WALK
         self.image = self.right_frames[self.frame_index]
@@ -75,6 +76,32 @@ class Mario(pg.sprite.Sprite):
         self.fire_transition_index = 0
         self.fireball_count = 0
         self.flag_pole_right = 0
+
+    def setup_static_colliders(self):
+        self.colliders = [1172]
+        self.colliders.append(1601)
+        self.colliders.append(1943)
+        self.colliders.append(2415)
+        self.colliders.append(5715)
+        self.colliders.append(5758)
+        self.colliders.append(5801)
+        self.colliders.append(5844)
+        self.colliders.append(5971)
+        self.colliders.append(6315)
+        self.colliders.append(6358)
+        self.colliders.append(6401)
+        self.colliders.append(6444)
+        self.colliders.append(6959)
+        self.colliders.append(7645)
+        self.colliders.append(7773)
+        self.colliders.append(7815)
+        self.colliders.append(7858)
+        self.colliders.append(7901)
+        self.colliders.append(7944)
+        self.colliders.append(7987)
+        self.colliders.append(8030)
+        self.colliders.append(8458)
+
 
 
     def load_images_from_sheet(self):
@@ -477,6 +504,8 @@ class Mario(pg.sprite.Sprite):
                     self.x_vel = 3
                 else:
                     self.x_vel = -3
+                    
+
         elif speech_events and speech_events[-1][0].lower() == 'stop':
             print('stop')
             self.get_out_of_crouch()
@@ -616,7 +645,6 @@ class Mario(pg.sprite.Sprite):
 
         elif keys[tools.keybinding['right']] or (speech_events and speech_events[-1][0].lower() == 'right'):
             print('right')
-            #print(self.x_vel)
             self.get_out_of_crouch()
             self.facing_right = True
             if(speech_events and speech_events[-1][0].lower() == 'jump' and speech_events[-1][1] == False):     
@@ -728,6 +756,11 @@ class Mario(pg.sprite.Sprite):
         self.check_to_allow_fireball(keys, speech_events)
         if self.y_vel < c.MAX_Y_VEL:
             self.y_vel += self.gravity
+
+        collided = self.colliders.index(self.rect.x) if self.rect.x in self.colliders else -1
+        if collided != -1:
+            print('pseudo jump')
+            self.x_vel += 1
 
         if keys[tools.keybinding['left']]:
             if self.x_vel > (self.max_x_vel * - 1):
