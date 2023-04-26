@@ -24,7 +24,7 @@ To install dependencies:
 
 HOW TO RUN:
 
-	python mario_level_1.py
+	python3 mario_level_1.py
 
 Or:
 
