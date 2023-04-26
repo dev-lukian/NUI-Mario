@@ -8,14 +8,14 @@ An attempt to recreate the first level of Super Mario Bros with speech commands.
 CONTROLS: 
 
 Speech commands
-'down'   -> Move menu selection down
-'up'     -> Move menu selection up
-'start'  -> Start game
-'right'  -> Move continuously to the right
-'left'   -> Move continuously to the left
-'jump'   -> Jump vertically with a slight horizontal movement to current direction
-'stop'   -> Stop
-'fire'   -> Throw a fireball
+* 'down'   -> Move menu selection down
+* 'up'     -> Move menu selection up
+* 'start'  -> Start game
+* 'right'  -> Move continuously to the right
+* 'left'   -> Move continuously to the left
+* 'jump'   -> Jump vertically with a slight horizontal movement to current direction
+* 'stop'   -> Stop
+* 'fire'   -> Throw a fireball
 
 DEPENDENCIES:
 
