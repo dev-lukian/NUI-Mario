@@ -101,6 +101,29 @@ class Mario(pg.sprite.Sprite):
         self.colliders.append(7987)
         self.colliders.append(8030)
         self.colliders.append(8458)
+        self.colliders.append(1162)
+        self.colliders.append(1591)
+        self.colliders.append(1933)
+        self.colliders.append(2405)
+        self.colliders.append(5705)
+        self.colliders.append(5748)
+        self.colliders.append(5791)
+        self.colliders.append(5834)
+        self.colliders.append(5961)
+        self.colliders.append(6305)
+        self.colliders.append(6348)
+        self.colliders.append(6391)
+        self.colliders.append(6434)
+        self.colliders.append(6949)
+        self.colliders.append(7635)
+        self.colliders.append(7733)
+        self.colliders.append(7805)
+        self.colliders.append(7848)
+        self.colliders.append(7891)
+        self.colliders.append(7934)
+        self.colliders.append(7977)
+        self.colliders.append(8020)
+        self.colliders.append(8448)
 
 
 
@@ -485,6 +508,7 @@ class Mario(pg.sprite.Sprite):
             self.state = c.WALK
         elif keys[tools.keybinding['right']] or (speech_events and speech_events[-1][0].lower() == 'right'):
             print('right')
+            print(self.rect.x)
             self.facing_right = True
             self.get_out_of_crouch()
             self.state = c.WALK
@@ -616,6 +640,7 @@ class Mario(pg.sprite.Sprite):
                     setup.SFX['big_jump'].play()
                 else:
                     setup.SFX['small_jump'].play()
+                    
                 self.state = c.JUMP
                 self.y_vel = c.JUMP_VEL
                 self.gravity = c.GRAVITY
@@ -645,6 +670,7 @@ class Mario(pg.sprite.Sprite):
 
         elif keys[tools.keybinding['right']] or (speech_events and speech_events[-1][0].lower() == 'right'):
             print('right')
+            print(self.rect.x)
             self.get_out_of_crouch()
             self.facing_right = True
             if(speech_events and speech_events[-1][0].lower() == 'jump' and speech_events[-1][1] == False):     
@@ -653,8 +679,10 @@ class Mario(pg.sprite.Sprite):
                if self.allow_jump:
                     if self.big:
                         setup.SFX['big_jump'].play()
+
                     else:
                         setup.SFX['small_jump'].play()
+
                     self.state = c.JUMP
                     self.y_vel = c.JUMP_VEL
                     self.gravity = c.GRAVITY
