@@ -30,7 +30,7 @@ class SpeechRecognizer:
 
 
     def recognize(self):
-        print('listening')
+        print('Listening for voice input')
         result = self.recognizer.recognize_once_async()
 
     def handle_detected(self, event):
@@ -43,8 +43,10 @@ class SpeechRecognizer:
         if event.result.text.lower() in c.COMMANDS:
             self.all_events.append([event.result.text.lower(), False])
             self.speech_state.state = c.RECOGNIZED
+            print('Recognized voice input "%s"' % event.result.text.lower())
         else:
             self.speech_state.state = c.FAILED
+            print('Voice input was not recognized')
         
         def changeState():
             self.speech_state.state = c.STAND_BY

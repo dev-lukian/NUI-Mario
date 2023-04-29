@@ -114,7 +114,7 @@ class Menu(tools._State):
                 print("down")
                 self.cursor.state = c.PLAYER2
             if speech_events and speech_events[-1][0].lower() == 'start' and speech_events[-1][1] == False:
-                print("start")
+                print("Game started")
                 self.reset_game_info()
                 self.done = True
         elif self.cursor.state == c.PLAYER2:
